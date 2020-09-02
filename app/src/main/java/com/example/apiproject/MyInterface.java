@@ -9,6 +9,12 @@ import retrofit2.http.GET;
 
 public interface MyInterface {
 
+
+
+    @GET("posts/1/comments")
+    Call<List<Comments>> getComments();
+
+
     @GET("posts")
     Call<List<Post>> getPosts();
 

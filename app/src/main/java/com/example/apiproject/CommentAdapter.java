@@ -11,33 +11,33 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
+public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHolder> {
 
-    private ArrayList<Post> posts = new ArrayList<>();
+    private ArrayList<Comments> comments = new ArrayList<>();
     private Context context;
-    public PostAdapter(Context context, ArrayList<Post> posts) {
-        this.posts=posts;
+    public CommentAdapter(Context context, ArrayList<Comments> comments) {
+        this.comments=comments;
         this.context=context;
     }
 
     @NonNull
     @Override
-    public PostAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public CommentAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.post_item_layout,parent,false);
         return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull PostAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull CommentAdapter.ViewHolder holder, int position) {
 
-    holder.tittle.setText(posts.get(position).getTitle());
-    holder.disc.setText(posts.get(position).getBody());
+    holder.tittle.setText(comments.get(position).getEmail());
+    holder.disc.setText(comments.get(position).getBody());
 
     }
 
     @Override
     public int getItemCount() {
-        return posts.size();
+        return comments.size();
     }
 
 
