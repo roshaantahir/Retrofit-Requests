@@ -60,12 +60,13 @@ commentButton.setOnClickListener(new View.OnClickListener() {
     @Override
     public void onClick(View view) {
         MyInterface myInterface = APIClient.getClient().create(MyInterface.class);
-        myInterface.getComments().enqueue(new Callback<List<Comments>>() {
+        myInterface.getComments(5).enqueue(new Callback<List<Comments>>() {
             @Override
             public void onResponse(Call<List<Comments>> call, Response<List<Comments>> response) {
                 comments = new ArrayList<>(response.body());
                 commentAdapter = new CommentAdapter(MainActivity.this,comments);
                 postrecyclerView.setAdapter(commentAdapter);
+
                 Toast.makeText(MainActivity.this, "Success", Toast.LENGTH_SHORT).show();
             }
 
