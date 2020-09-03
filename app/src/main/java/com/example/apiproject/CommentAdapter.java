@@ -30,8 +30,12 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
     @Override
     public void onBindViewHolder(@NonNull CommentAdapter.ViewHolder holder, int position) {
 
-    holder.tittle.setText(comments.get(position).getEmail());
-    holder.disc.setText(comments.get(position).getBody());
+        holder.tittle.setText(comments.get(position).getEmail());
+        holder.id.setText("id : " +comments.get(position).getId().toString());
+        holder.postid.setText("postId : "+comments.get(position).getPostId().toString());
+        holder.disc.setText(comments.get(position).getBody());
+
+
 
     }
 
@@ -43,10 +47,16 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private TextView tittle;
+        private TextView id;
+        private TextView postid;
         private TextView disc;
+
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             tittle =itemView.findViewById(R.id.Tittle);
+            id = itemView.findViewById(R.id.Id);
+            postid = itemView.findViewById(R.id.PostId);
             disc = itemView.findViewById(R.id.Disc);
         }
     }

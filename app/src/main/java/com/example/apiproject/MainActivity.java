@@ -10,7 +10,9 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -36,9 +38,25 @@ public class MainActivity extends AppCompatActivity {
         postButton = findViewById(R.id.PostButton);
         commentButton = findViewById(R.id.CommentButton);
 
+
 postButton.setOnClickListener(new View.OnClickListener() {
     @Override
     public void onClick(View view) {
+      PostData();
+    }
+});
+
+
+commentButton.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View view) {
+        CommentData();
+    }
+});
+    }
+
+
+    private void PostData(){
         MyInterface myInterface = APIClient.getClient().create(MyInterface.class);
         myInterface.getPosts().enqueue(new Callback<List<Post>>() {
             @Override
@@ -55,18 +73,19 @@ postButton.setOnClickListener(new View.OnClickListener() {
             }
         });
     }
-});
-commentButton.setOnClickListener(new View.OnClickListener() {
-    @Override
-    public void onClick(View view) {
+
+    private void CommentData(){
         MyInterface myInterface = APIClient.getClient().create(MyInterface.class);
-        myInterface.getComments(5).enqueue(new Callback<List<Comments>>() {
+        Map<String,String> parameters = new HashMap<>();
+        parameters.put("postId","8");
+        parameters.put("_sort","id");
+        parameters.put("_order","asc");
+        myInterface.getComments(parameters).enqueue(new Callback<List<Comments>>() {
             @Override
             public void onResponse(Call<List<Comments>> call, Response<List<Comments>> response) {
                 comments = new ArrayList<>(response.body());
                 commentAdapter = new CommentAdapter(MainActivity.this,comments);
                 postrecyclerView.setAdapter(commentAdapter);
-
                 Toast.makeText(MainActivity.this, "Success", Toast.LENGTH_SHORT).show();
             }
 
@@ -75,15 +94,8 @@ commentButton.setOnClickListener(new View.OnClickListener() {
                 Toast.makeText(MainActivity.this, "Error", Toast.LENGTH_SHORT).show();
             }
         });
-    }
-});
-
 
     }
-
-
-
-
 
 
 }

@@ -34,6 +34,18 @@
                 android:focusable="true" />
 
             <TextView
+                android:id="@+id/Id"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="This IS ID"
+                android:textSize="16sp" />
+            <TextView
+                android:id="@+id/PostId"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="This IS PostId"
+                android:textSize="16sp" />
+            <TextView
                 android:id="@+id/Disc"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
