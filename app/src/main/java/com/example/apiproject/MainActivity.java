@@ -7,6 +7,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -23,10 +25,14 @@ public class MainActivity extends AppCompatActivity {
     RecyclerView postrecyclerView;
     private PostAdapter postAdapter;
     private CommentAdapter commentAdapter;
+
     ArrayList<Post> posts = new ArrayList<>();
     ArrayList<Comments> comments = new ArrayList<>();
+    TextView createdPostText;
+
     Button postButton;
     Button commentButton;
+    Button createdPost;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,15 +40,16 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         postrecyclerView = findViewById(R.id.postRecyclerView);
         postrecyclerView.setLayoutManager(new LinearLayoutManager(this));
-
         postButton = findViewById(R.id.PostButton);
         commentButton = findViewById(R.id.CommentButton);
+        createdPost = findViewById(R.id.CreatedPostButton);
 
 
 postButton.setOnClickListener(new View.OnClickListener() {
     @Override
     public void onClick(View view) {
       PostData();
+      createdPostText.setVisibility(View.INVISIBLE);
     }
 });
 
@@ -50,9 +57,50 @@ postButton.setOnClickListener(new View.OnClickListener() {
 commentButton.setOnClickListener(new View.OnClickListener() {
     @Override
     public void onClick(View view) {
+        createdPostText=findViewById(R.id.createdPostData);
         CommentData();
+        createdPostText.setVisibility(View.INVISIBLE);
     }
 });
+createdPost.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View view) {
+        CreatedPost();
+        postrecyclerView.setVisibility(View.INVISIBLE);
+
+    }
+});
+    }
+
+    private void CreatedPost() {
+
+        Post createdpost = new Post(1, "Hello World", "This is the description of Created Post");
+        MyInterface myInterface = APIClient.getClient().create(MyInterface.class);
+        myInterface.createPost(createdpost).enqueue(new Callback<Post>() {
+            @Override
+            public void onResponse(Call<Post> call, Response<Post> response) {
+                if (response.isSuccessful()) {
+                    createdPostText=findViewById(R.id.createdPostData);
+                    createdPostText.setText(String.valueOf(response.code()));
+                    showCreatedPost(response.body());
+                }
+
+                Toast.makeText(MainActivity.this, "Success", Toast.LENGTH_SHORT).show();
+            }
+            @Override
+            public void onFailure(Call<Post> call, Throwable t) {
+                Toast.makeText(MainActivity.this, "Error", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
+    }
+    private void showCreatedPost(Post post){
+        createdPostText=findViewById(R.id.createdPostData);
+        createdPostText.append("\n"+"user id : "+ post.getUserId()+"\n");
+        createdPostText.append("id : "+ post.getId()+"\n");
+        createdPostText.append("tittle : "+ post.getTitle()+"\n");
+        createdPostText.append("body : "+ post.getBody()+"\n");
     }
 
 

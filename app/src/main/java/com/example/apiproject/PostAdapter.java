@@ -13,8 +13,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
-
+    private Post post;
     private ArrayList<Post> posts = new ArrayList<>();
+
     private Context context;
     public PostAdapter(Context context, ArrayList<Post> posts) {
         this.posts=posts;
@@ -34,6 +35,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         holder.tittle.setText(posts.get(position).getTitle());
         holder.disc.setText(posts.get(position).getBody());
         holder.id.setText("Id : "+posts.get(position).getId().toString());
+//        holder.id.setText("Id : " + String.valueOf(posts.get(position).getId()));
         holder.postid.setText("User Id : "+posts.get(position).getUserId().toString());
     }
 
