@@ -44,26 +44,26 @@ public class MainActivity extends AppCompatActivity {
         createdPostText = findViewById(R.id.createdPostData);
 
 
-postButton.setOnClickListener(new View.OnClickListener() {
-    @Override
-    public void onClick(View view) {
-      PostData();
-    }
-});
+        postButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                PostData();
+            }
+        });
 
-commentButton.setOnClickListener(new View.OnClickListener() {
-    @Override
-    public void onClick(View view) {
-        CommentData();
-    }
-});
+        commentButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                CommentData();
+            }
+        });
 
-createdPost.setOnClickListener(new View.OnClickListener() {
-    @Override
-    public void onClick(View view) {
-        CreatedPost();
-    }
-});
+        createdPost.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                CreatedPost();
+            }
+        });
     }
 
     private void CreatedPost() {
@@ -82,6 +82,7 @@ createdPost.setOnClickListener(new View.OnClickListener() {
 
                 Toast.makeText(MainActivity.this, "Success", Toast.LENGTH_SHORT).show();
             }
+
             @Override
             public void onFailure(Call<Post> call, Throwable t) {
                 Toast.makeText(MainActivity.this, "Error", Toast.LENGTH_SHORT).show();
@@ -89,15 +90,15 @@ createdPost.setOnClickListener(new View.OnClickListener() {
         });
     }
 
-    private void showCreatedPost(Post post){
-        createdPostText=findViewById(R.id.createdPostData);
-        createdPostText.append("\n"+"user id : "+ post.getUserId()+"\n");
-        createdPostText.append("id : "+ post.getId()+"\n");
-        createdPostText.append("tittle : "+ post.getTitle()+"\n");
-        createdPostText.append("body : "+ post.getBody()+"\n");
+    private void showCreatedPost(Post post) {
+        createdPostText = findViewById(R.id.createdPostData);
+        createdPostText.append("\n" + "user id : " + post.getUserId() + "\n");
+        createdPostText.append("id : " + post.getId() + "\n");
+        createdPostText.append("tittle : " + post.getTitle() + "\n");
+        createdPostText.append("body : " + post.getBody() + "\n");
     }
 
-    private void PostData(){
+    private void PostData() {
         postrecyclerView.setVisibility(View.VISIBLE);
         createdPostText.setVisibility(View.INVISIBLE);
         MyInterface myInterface = APIClient.getClient().create(MyInterface.class);
@@ -105,7 +106,7 @@ createdPost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onResponse(Call<List<Post>> call, Response<List<Post>> response) {
                 posts = new ArrayList<>(response.body());
-                postAdapter= new PostAdapter(MainActivity.this,posts);
+                postAdapter = new PostAdapter(MainActivity.this, posts);
                 postrecyclerView.setAdapter(postAdapter);
                 Toast.makeText(MainActivity.this, "Success", Toast.LENGTH_SHORT).show();
             }
@@ -117,19 +118,19 @@ createdPost.setOnClickListener(new View.OnClickListener() {
         });
     }
 
-    private void CommentData(){
+    private void CommentData() {
         createdPostText.setVisibility(View.INVISIBLE);
         postrecyclerView.setVisibility(View.VISIBLE);
-        Map<String,String> parameters = new HashMap<>();
-        parameters.put("postId","8");
-        parameters.put("_sort","id");
-        parameters.put("_order","asc");
+        Map<String, String> parameters = new HashMap<>();
+        parameters.put("postId", "8");
+        parameters.put("_sort", "id");
+        parameters.put("_order", "asc");
         MyInterface myInterface = APIClient.getClient().create(MyInterface.class);
         myInterface.getComments(parameters).enqueue(new Callback<List<Comments>>() {
             @Override
             public void onResponse(Call<List<Comments>> call, Response<List<Comments>> response) {
                 comments = new ArrayList<>(response.body());
-                commentAdapter = new CommentAdapter(MainActivity.this,comments);
+                commentAdapter = new CommentAdapter(MainActivity.this, comments);
                 postrecyclerView.setAdapter(commentAdapter);
                 Toast.makeText(MainActivity.this, "Success", Toast.LENGTH_SHORT).show();
             }
