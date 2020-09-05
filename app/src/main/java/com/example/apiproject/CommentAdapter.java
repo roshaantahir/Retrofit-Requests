@@ -15,15 +15,16 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
 
     private ArrayList<Comments> comments = new ArrayList<>();
     private Context context;
+
     public CommentAdapter(Context context, ArrayList<Comments> comments) {
-        this.comments=comments;
-        this.context=context;
+        this.comments = comments;
+        this.context = context;
     }
 
     @NonNull
     @Override
     public CommentAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.post_item_layout,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.post_item_layout, parent, false);
         return new ViewHolder(view);
     }
 
@@ -31,10 +32,9 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
     public void onBindViewHolder(@NonNull CommentAdapter.ViewHolder holder, int position) {
 
         holder.tittle.setText(comments.get(position).getEmail());
-        holder.id.setText("id : " +comments.get(position).getId().toString());
-        holder.postid.setText("postId : "+comments.get(position).getPostId().toString());
+        holder.id.setText("id : " + comments.get(position).getId().toString());
+        holder.postid.setText("postId : " + comments.get(position).getPostId().toString());
         holder.disc.setText(comments.get(position).getBody());
-
 
 
     }
@@ -54,7 +54,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            tittle =itemView.findViewById(R.id.Tittle);
+            tittle = itemView.findViewById(R.id.Tittle);
             id = itemView.findViewById(R.id.Id);
             postid = itemView.findViewById(R.id.PostId);
             disc = itemView.findViewById(R.id.Disc);

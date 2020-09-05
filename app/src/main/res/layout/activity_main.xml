@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    >
+    android:layout_height="match_parent">
 
 
     <LinearLayout
@@ -22,26 +21,40 @@
             android:id="@+id/CommentButton"
             style="@android:style/Widget.Material.Button.Borderless.Colored"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="8sp"
             android:text="Comments"
-            tools:layout_editor_absoluteY="12dp" />
+            tools:layout_editor_absoluteY="12dp"
+            tools:ignore="SmallSp" />
 
         <Button
             android:id="@+id/PostButton"
             style="@android:style/Widget.Material.Button.Borderless.Colored"
+            android:textSize="8sp"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginStart="10dp"
+            android:layout_height="wrap_content"
             android:text="Posts"
-            tools:layout_editor_absoluteY="12dp" />
+            tools:layout_editor_absoluteY="12dp"
+            tools:ignore="SmallSp" />
+
         <Button
             android:id="@+id/CreatedPostButton"
+            android:textSize="8sp"
             style="@android:style/Widget.Material.Button.Borderless.Colored"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginStart="10dp"
+            android:layout_height="wrap_content"
             android:text="Created Post"
-            tools:layout_editor_absoluteY="12dp" />
+            tools:layout_editor_absoluteY="12dp"
+            tools:ignore="SmallSp" />
+        <Button
+            android:id="@+id/UpdatedPostButton"
+            android:textSize="8sp"
+            style="@android:style/Widget.Material.Button.Borderless.Colored"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Update Post"
+            tools:layout_editor_absoluteY="12dp"
+            tools:ignore="SmallSp" />
 
     </LinearLayout>
 
@@ -59,16 +72,15 @@
             android:id="@+id/createdPostData"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:layout_editor_absoluteX="11dp"
-            tools:layout_editor_absoluteY="143dp"
             android:paddingStart="10dp"
             android:paddingTop="10dp"
-            tools:ignore="RtlSymmetry" />
+            tools:ignore="RtlSymmetry"
+            tools:layout_editor_absoluteX="11dp"
+            tools:layout_editor_absoluteY="143dp" />
     </LinearLayout>
 
 
-
-        <androidx.recyclerview.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/postRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

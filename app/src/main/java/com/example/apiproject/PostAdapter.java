@@ -17,15 +17,16 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
     private ArrayList<Post> posts = new ArrayList<>();
 
     private Context context;
+
     public PostAdapter(Context context, ArrayList<Post> posts) {
-        this.posts=posts;
-        this.context=context;
+        this.posts = posts;
+        this.context = context;
     }
 
     @NonNull
     @Override
     public PostAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.post_item_layout,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.post_item_layout, parent, false);
         return new ViewHolder(view);
     }
 
@@ -34,9 +35,9 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
     public void onBindViewHolder(@NonNull PostAdapter.ViewHolder holder, int position) {
         holder.tittle.setText(posts.get(position).getTitle());
         holder.disc.setText(posts.get(position).getBody());
-        holder.id.setText("Id : "+posts.get(position).getId().toString());
+        holder.id.setText("Id : " + posts.get(position).getId().toString());
 //        holder.id.setText("Id : " + String.valueOf(posts.get(position).getId()));
-        holder.postid.setText("User Id : "+posts.get(position).getUserId().toString());
+        holder.postid.setText("User Id : " + posts.get(position).getUserId().toString());
     }
 
     @Override
@@ -50,9 +51,10 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         private TextView disc;
         private TextView id;
         private TextView postid;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            tittle =itemView.findViewById(R.id.Tittle);
+            tittle = itemView.findViewById(R.id.Tittle);
             disc = itemView.findViewById(R.id.Disc);
             id = itemView.findViewById(R.id.Id);
             postid = itemView.findViewById(R.id.PostId);

@@ -1,11 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="10dp"
-
-
-
     >
 
     <androidx.cardview.widget.CardView
@@ -15,8 +12,8 @@
         android:layout_marginTop="10dp"
         android:clickable="true"
         android:focusable="true"
-        android:foreground="?android:attr/selectableItemBackground"
-       >
+        android:foreground="?android:attr/selectableItemBackground">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -24,14 +21,14 @@
 
             <TextView
                 android:id="@+id/Tittle"
-                android:clickable="true"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
+                android:clickable="true"
+                android:focusable="true"
                 android:text="Tittle"
                 android:textSize="20sp"
-                android:textStyle="bold"
-                android:focusable="true" />
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/Id"
@@ -39,12 +36,14 @@
                 android:layout_height="wrap_content"
                 android:text="This IS ID"
                 android:textSize="16sp" />
+
             <TextView
                 android:id="@+id/PostId"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="This IS PostId"
                 android:textSize="16sp" />
+
             <TextView
                 android:id="@+id/Disc"
                 android:layout_width="match_parent"

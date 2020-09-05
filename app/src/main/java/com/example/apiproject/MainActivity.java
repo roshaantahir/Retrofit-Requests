@@ -30,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
     Button postButton;
     Button commentButton;
     Button createdPost;
+    Button updatePost;
     TextView createdPostText;
 
     @Override
@@ -42,6 +43,14 @@ public class MainActivity extends AppCompatActivity {
         commentButton = findViewById(R.id.CommentButton);
         createdPost = findViewById(R.id.CreatedPostButton);
         createdPostText = findViewById(R.id.createdPostData);
+        updatePost = findViewById(R.id.UpdatedPostButton);
+
+        updatePost.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DeletedPost();
+            }
+        });
 
 
         postButton.setOnClickListener(new View.OnClickListener() {
@@ -67,15 +76,18 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void CreatedPost() {
-        Post createdpost = new Post(1, "Hello World", "This is the description of Created Post");
+//        Post createdpost = new Post(1, "Hello World", "This is the description of Created Post");
         MyInterface myInterface = APIClient.getClient().create(MyInterface.class);
         postrecyclerView.setVisibility(View.INVISIBLE);
         createdPostText.setVisibility(View.VISIBLE);
-        myInterface.createPost(createdpost).enqueue(new Callback<Post>() {
+        Map<String,String> postMap = new HashMap<>();
+        postMap.put("userId","8");
+        postMap.put("title","Hello World");
+        postMap.put("body","This is the description of post.");
+        myInterface.createPost(postMap).enqueue(new Callback<Post>() {
             @Override
             public void onResponse(Call<Post> call, Response<Post> response) {
                 if (response.isSuccessful()) {
-
                     createdPostText.setText(String.valueOf(response.code()));
                     showCreatedPost(response.body());
                 }
@@ -88,6 +100,50 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this, "Error", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+    private void DeletedPost() {
+        MyInterface myInterface = APIClient.getClient().create(MyInterface.class);
+        postrecyclerView.setVisibility(View.INVISIBLE);
+        createdPostText.setVisibility(View.VISIBLE);
+        myInterface.deletePost(5).enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if (response.isSuccessful()) {
+                    createdPostText.setText(String.valueOf(response.code()));
+                    createdPostText.append("\n"+"Post Deleted successfully");
+                }
+                Toast.makeText(MainActivity.this, "Success", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                Toast.makeText(MainActivity.this, "Error", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void updatedPost(){
+                Post updatepost = new Post(1,null, "This is the description of updated Post");
+        MyInterface myInterface = APIClient.getClient().create(MyInterface.class);
+        postrecyclerView.setVisibility(View.INVISIBLE);
+        createdPostText.setVisibility(View.VISIBLE);
+        myInterface.patchPost(5,updatepost).enqueue(new Callback<Post>() {
+            @Override
+            public void onResponse(Call<Post> call, Response<Post> response) {
+                if (response.isSuccessful()) {
+                    createdPostText.setText(String.valueOf(response.code()));
+                    showCreatedPost(response.body());
+                }
+
+                Toast.makeText(MainActivity.this, "Success", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFailure(Call<Post> call, Throwable t) {
+                Toast.makeText(MainActivity.this, "Error", Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
 
     private void showCreatedPost(Post post) {
