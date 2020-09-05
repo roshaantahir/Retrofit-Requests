@@ -25,14 +25,12 @@ public class MainActivity extends AppCompatActivity {
     RecyclerView postrecyclerView;
     private PostAdapter postAdapter;
     private CommentAdapter commentAdapter;
-
     ArrayList<Post> posts = new ArrayList<>();
     ArrayList<Comments> comments = new ArrayList<>();
-    TextView createdPostText;
-
     Button postButton;
     Button commentButton;
     Button createdPost;
+    TextView createdPostText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,44 +41,41 @@ public class MainActivity extends AppCompatActivity {
         postButton = findViewById(R.id.PostButton);
         commentButton = findViewById(R.id.CommentButton);
         createdPost = findViewById(R.id.CreatedPostButton);
+        createdPostText = findViewById(R.id.createdPostData);
 
 
 postButton.setOnClickListener(new View.OnClickListener() {
     @Override
     public void onClick(View view) {
       PostData();
-      createdPostText.setVisibility(View.INVISIBLE);
     }
 });
-
 
 commentButton.setOnClickListener(new View.OnClickListener() {
     @Override
     public void onClick(View view) {
-        createdPostText=findViewById(R.id.createdPostData);
         CommentData();
-        createdPostText.setVisibility(View.INVISIBLE);
     }
 });
+
 createdPost.setOnClickListener(new View.OnClickListener() {
     @Override
     public void onClick(View view) {
         CreatedPost();
-        postrecyclerView.setVisibility(View.INVISIBLE);
-
     }
 });
     }
 
     private void CreatedPost() {
-
         Post createdpost = new Post(1, "Hello World", "This is the description of Created Post");
         MyInterface myInterface = APIClient.getClient().create(MyInterface.class);
+        postrecyclerView.setVisibility(View.INVISIBLE);
+        createdPostText.setVisibility(View.VISIBLE);
         myInterface.createPost(createdpost).enqueue(new Callback<Post>() {
             @Override
             public void onResponse(Call<Post> call, Response<Post> response) {
                 if (response.isSuccessful()) {
-                    createdPostText=findViewById(R.id.createdPostData);
+
                     createdPostText.setText(String.valueOf(response.code()));
                     showCreatedPost(response.body());
                 }
@@ -92,9 +87,8 @@ createdPost.setOnClickListener(new View.OnClickListener() {
                 Toast.makeText(MainActivity.this, "Error", Toast.LENGTH_SHORT).show();
             }
         });
-
-
     }
+
     private void showCreatedPost(Post post){
         createdPostText=findViewById(R.id.createdPostData);
         createdPostText.append("\n"+"user id : "+ post.getUserId()+"\n");
@@ -103,8 +97,9 @@ createdPost.setOnClickListener(new View.OnClickListener() {
         createdPostText.append("body : "+ post.getBody()+"\n");
     }
 
-
     private void PostData(){
+        postrecyclerView.setVisibility(View.VISIBLE);
+        createdPostText.setVisibility(View.INVISIBLE);
         MyInterface myInterface = APIClient.getClient().create(MyInterface.class);
         myInterface.getPosts().enqueue(new Callback<List<Post>>() {
             @Override
@@ -123,11 +118,13 @@ createdPost.setOnClickListener(new View.OnClickListener() {
     }
 
     private void CommentData(){
-        MyInterface myInterface = APIClient.getClient().create(MyInterface.class);
+        createdPostText.setVisibility(View.INVISIBLE);
+        postrecyclerView.setVisibility(View.VISIBLE);
         Map<String,String> parameters = new HashMap<>();
         parameters.put("postId","8");
         parameters.put("_sort","id");
         parameters.put("_order","asc");
+        MyInterface myInterface = APIClient.getClient().create(MyInterface.class);
         myInterface.getComments(parameters).enqueue(new Callback<List<Comments>>() {
             @Override
             public void onResponse(Call<List<Comments>> call, Response<List<Comments>> response) {
@@ -144,6 +141,5 @@ createdPost.setOnClickListener(new View.OnClickListener() {
         });
 
     }
-
 
 }
